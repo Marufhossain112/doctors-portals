@@ -19,4 +19,13 @@ const getSpecialization = async (id: string): Promise<Specialization | null> => 
     });
     return result;
 };
-export const specializationService = { createSpecialization, getSpecializations, getSpecialization };
+const updateSpecialization = async (id: string, payload: Partial<Specialization>): Promise<Partial<Specialization>> => {
+    const result = await prisma.specialization.update({
+        where: {
+            id
+        }, data: payload
+    },
+    );
+    return result;
+};
+export const specializationService = { createSpecialization, getSpecializations, getSpecialization, updateSpecialization };

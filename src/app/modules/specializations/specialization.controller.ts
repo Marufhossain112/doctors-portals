@@ -51,4 +51,22 @@ const getSpecialization = async (req: Request, res: Response) => {
         });
     }
 };
-export const specializationController = { createSpecialization, getSpecializations, getSpecialization };
+const updateSpecialization = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const { ...newData } = req.body;
+        const result = await specializationService.updateSpecialization(id, newData);
+        res.status(200).json({
+            status: 200,
+            message: "Specialization updated successfully.",
+            data: result
+        });
+    } catch (error) {
+        res.status(400).json({
+            status: 'error',
+            message: "Something went wrong",
+            error
+        });
+    }
+};
+export const specializationController = { createSpecialization, getSpecializations, getSpecialization, updateSpecialization };
