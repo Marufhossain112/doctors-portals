@@ -19,13 +19,13 @@ const createDoctor = async (req: Request, res: Response) => {
 };
 const getDoctors = async (req: Request, res: Response) => {
     try {
-        const { limit = 1, page = 1 } = req.query;
-        // console.log(req.query);
-        const result = await doctorService.getDoctors(Number(limit), Number(page));
+        const { sortBy = "createdAt", sortOrder = "desc", limit = 1, page = 1 } = req.query;
+        const result = await doctorService.getDoctors(String(sortBy), sortOrder as "asc" | "desc", Number(limit), Number(page));
         res.status(200).json({
             status: 200,
             message: "Doctors fetched successfully.",
-            data: result
+            meta: result.meta,
+            data: result.data
         });
     } catch (error) {
         res.status(400).json({
