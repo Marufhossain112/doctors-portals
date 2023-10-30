@@ -69,4 +69,21 @@ const updateSpecialization = async (req: Request, res: Response) => {
         });
     }
 };
-export const specializationController = { createSpecialization, getSpecializations, getSpecialization, updateSpecialization };
+const deleteSpecialization = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const result = await specializationService.deleteSpecialization(id);
+        res.status(200).json({
+            status: 200,
+            message: "Specialization deleted successfully.",
+            data: result
+        });
+    } catch (error) {
+        res.status(400).json({
+            status: 'error',
+            message: "Something went wrong",
+            error
+        });
+    }
+};
+export const specializationController = { createSpecialization, getSpecializations, getSpecialization, updateSpecialization, deleteSpecialization };

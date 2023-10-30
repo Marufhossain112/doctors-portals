@@ -28,4 +28,12 @@ const updateSpecialization = async (id: string, payload: Partial<Specialization>
     );
     return result;
 };
-export const specializationService = { createSpecialization, getSpecializations, getSpecialization, updateSpecialization };
+const deleteSpecialization = async (id: string): Promise<Specialization> => {
+    const result = await prisma.specialization.delete({
+        where: {
+            id
+        }
+    });
+    return result;
+};
+export const specializationService = { createSpecialization, getSpecializations, getSpecialization, updateSpecialization, deleteSpecialization };
