@@ -19,8 +19,9 @@ const createDoctor = async (req: Request, res: Response) => {
 };
 const getDoctors = async (req: Request, res: Response) => {
     try {
-        const { sortBy = "createdAt", sortOrder = "desc", limit = 1, page = 1 } = req.query;
-        const result = await doctorService.getDoctors(String(sortBy), sortOrder as "asc" | "desc", Number(limit), Number(page));
+        const { sortBy = "createdAt", sortOrder = "desc", searchTerm = "", limit = 1, page = 1, ...filterData } = req.query;
+        // console.log(filterData);
+        const result = await doctorService.getDoctors(String(sortBy), sortOrder as "asc" | "desc", searchTerm as string, Number(limit), Number(page), filterData);
         res.status(200).json({
             status: 200,
             message: "Doctors fetched successfully.",
