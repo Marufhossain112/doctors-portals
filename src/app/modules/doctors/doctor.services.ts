@@ -4,11 +4,14 @@ const createDoctor = async (data: Doctor): Promise<Doctor> => {
     const result = await prisma.doctor.create({ data });
     return result;
 };
-const getDoctors = async (): Promise<Doctor[] | null> => {
+const getDoctors = async (limit: number, page: number): Promise<Doctor[] | null> => {
     const result = await prisma.doctor.findMany({
         include: {
             specialization: true
-        }
+        },
+        // take: Number(limit)
+        take: limit,
+        skip: (page - 1) * limit
     });
     return result;
 };
