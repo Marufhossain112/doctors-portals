@@ -5,6 +5,7 @@ import httpStatus from 'http-status';
 import routes from './app/routes';
 
 import cookieParser from 'cookie-parser';
+import path from 'path';
 
 const app: Application = express();
 
@@ -28,10 +29,23 @@ app.get('/', async (req: Request, res: Response, next: NextFunction) => {
     message: 'Welcome HTTP SERVER',
   });
 });
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  res.status(httpStatus.FORBIDDEN).json({
+    success: "false",
+    message: "FORBIDDEN",
+    errorMessages: {
+      message: err
+    }
+  });
+});
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.status(httpStatus.NOT_FOUND).json({
     success: "false",
-    messsage: "not found"
+    message: "not found",
+    errorMessages: [{
+      path: req.originalUrl,
+      message: "not found"
+    }]
   });
 });
 export default app;

@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { doctorService } from "./doctor.services";
-const createDoctor = async (req: Request, res: Response) => {
+const createDoctor = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const data = req.body;
         const result = await doctorService.createDoctor(data);
@@ -10,11 +10,7 @@ const createDoctor = async (req: Request, res: Response) => {
             data: result
         });
     } catch (error) {
-        res.status(400).json({
-            status: 'error',
-            message: "Something went wrong",
-            error
-        });
+        next(error);
     }
 };
 const getDoctors = async (req: Request, res: Response) => {
