@@ -71,13 +71,13 @@ model Admins {
 }
 
 model Services {
-  id               String             @id @default(uuid())
-  name             String             @unique
-  description      String?
-  createdAt        DateTime           @default(now()) @map("created_at")
-  updatedAt        DateTime           @updatedAt @map("updated_at")
-  specializationId String             @map("specialization_id")
-  specialization   Specialization     @relation(fields: [specializationId], references: [id])
+  id                String             @id @default(uuid())
+  name              String             @unique
+  description       String?
+  createdAt         DateTime           @default(now()) @map("created_at")
+  updatedAt         DateTime           @updatedAt @map("updated_at")
+  specializationId  String             @map("specialization_id")
+  specialization    Specialization     @relation(fields: [specializationId], references: [id])
   availableServices AvailableService[]
 
   @@map("services")
@@ -94,6 +94,8 @@ model Appointments {
   patientsId         String           @map("patients_id")
   patients           Patients         @relation(fields: [patientsId], references: [id])
   payment            Payments?
+
+  @@map("appointments")
 }
 
 model TimeSlots {
@@ -150,6 +152,8 @@ model Payments {
   updatedAt     DateTime     @updatedAt @map("updated_at")
   appointmentId String       @unique @map("appointment_id")
   appointment   Appointments @relation(fields: [appointmentId], references: [id])
+
+  @@map("payments")
 }
 
 model MedicalProfile {
@@ -166,4 +170,6 @@ model MedicalProfile {
   updatedAt        DateTime @updatedAt @map("updated_at")
   patientId        String   @unique @map("patient_id")
   patient          Patients @relation(fields: [patientId], references: [id])
+
+  @@map("medical_profile")
 }
